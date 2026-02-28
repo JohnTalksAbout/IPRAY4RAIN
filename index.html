@@ -478,6 +478,110 @@ body::before {
   .lightbox-title { font-size: 2rem; }
 }
 
+/* ── Support Section ── */
+.support-section {
+  padding: 100px 24px;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+
+.support-section::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(ellipse 70% 60% at 50% 50%, rgba(123,47,255,0.1) 0%, transparent 70%),
+    radial-gradient(ellipse 40% 40% at 30% 60%, rgba(255,45,120,0.08) 0%, transparent 60%);
+  pointer-events: none;
+}
+
+.support-inner {
+  max-width: 580px;
+  margin: 0 auto;
+  position: relative;
+}
+
+.support-glow {
+  position: absolute;
+  top: -60px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 200px;
+  height: 1px;
+  background: linear-gradient(to right, transparent, var(--pink), var(--violet), transparent);
+}
+
+.support-eyebrow {
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.35em;
+  text-transform: uppercase;
+  color: var(--violet);
+  margin-bottom: 20px;
+}
+
+.support-heading {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: clamp(3rem, 10vw, 5.5rem);
+  line-height: 0.92;
+  background: linear-gradient(135deg, #ffffff 0%, #e0ccff 50%, #ff2d78 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  margin-bottom: 28px;
+}
+
+.support-body {
+  font-size: 1rem;
+  line-height: 1.8;
+  color: rgba(255,255,255,0.6);
+  margin-bottom: 40px;
+  font-weight: 400;
+}
+
+.support-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 18px 36px;
+  background: linear-gradient(135deg, var(--pink), var(--violet));
+  border-radius: 100px;
+  color: var(--white);
+  text-decoration: none;
+  font-family: 'Syne', sans-serif;
+  font-size: 0.95rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  transition: transform 0.2s, box-shadow 0.3s;
+  position: relative;
+  overflow: hidden;
+  margin-bottom: 20px;
+}
+
+.support-btn::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, rgba(255,255,255,0.15), transparent);
+  opacity: 0;
+  transition: opacity 0.2s;
+  border-radius: 100px;
+}
+
+.support-btn:hover::before { opacity: 1; }
+.support-btn:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 12px 40px rgba(255,45,120,0.45), 0 4px 20px rgba(123,47,255,0.3);
+}
+
+.support-note {
+  font-size: 0.75rem;
+  color: var(--muted);
+  letter-spacing: 0.05em;
+}
+
 /* ── Footer ── */
 .footer {
   border-top: 1px solid rgba(255,255,255,0.06);
@@ -618,6 +722,28 @@ body::before {
 
 <canvas id="offscreen-canvas"></canvas>
 
+<!-- ══ SUPPORT SECTION ══════════════════════════════════════════ -->
+<section class="support-section">
+  <div class="support-inner">
+    <div class="support-glow"></div>
+    <p class="support-eyebrow">Free — always</p>
+    <h2 class="support-heading">50 wallpapers.<br>No catch.</h2>
+    <p class="support-body">
+      Every piece here is Ema's original work — made by hand, given away freely.
+      If her art has ended up on your phone and it makes you smile every time you
+      unlock it, a small donation means she can keep creating.
+    </p>
+    <a href="https://www.paypal.com/paypalme/emasweeneytattoo" target="_blank" rel="noopener noreferrer" class="support-btn">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
+        <path d="M12 21.5C17.247 21.5 21.5 17.247 21.5 12S17.247 2.5 12 2.5 2.5 6.753 2.5 12 6.753 21.5 12 21.5z" stroke="white" stroke-width="1.5"/>
+        <path d="M8 12l2.5 2.5L16 9" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+      Support Ema's Work
+    </a>
+    <p class="support-note">Every contribution goes directly to Ema ❤</p>
+  </div>
+</section>
+
 <footer class="footer">
   <div class="footer-glow"></div>
   <p class="footer-name">IPRAY4RAIN</p>
@@ -625,7 +751,7 @@ body::before {
     <a href="https://www.instagram.com/ipray4rain/" target="_blank" rel="noopener noreferrer" class="footer-link">📷 @ipray4rain</a>
     <a href="https://www.instagram.com/emasweeney/" target="_blank" rel="noopener noreferrer" class="footer-link">📷 @emasweeney</a>
     <a href="https://emasweeney.com" target="_blank" rel="noopener noreferrer" class="footer-link">🌐 emasweeney.com</a>
-    <a href="/cdn-cgi/l/email-protection#81e8f1f3e0f8e7eef3f3e0e8efb4b5c1e6ece0e8edafe2eeec" class="footer-link" id="emailLink" onclick="copyEmail(event)">✉️ <span class="__cf_email__" data-cfemail="1871686a79617e776a6a7971762d2c587f75797174367b7775">[email&#160;protected]</span></a>
+    <a href="mailto:iprayforrain54@gmail.com" class="footer-link" id="emailLink" onclick="copyEmail(event)">✉️ iprayforrain54@gmail.com</a>
     <a href="https://www.paypal.com/paypalme/emasweeneytattoo" target="_blank" rel="noopener noreferrer" class="footer-link">☕ Support Ema's Work</a>
   </div>
   <div class="footer-divider"></div>
@@ -635,7 +761,7 @@ body::before {
   </p>
 </footer>
 
-<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+<script>
 // ═══════════════════════════════════════════════════════
 //  GALLERY — all 54 artworks
 //  Titles marked * are placeholders — update with Ema's real titles
