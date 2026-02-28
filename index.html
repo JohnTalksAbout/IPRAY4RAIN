@@ -1,0 +1,836 @@
+<!DOCTYPE html>
+<!--
+╔══════════════════════════════════════════════════════════════════════════════╗
+║                    IPRAY4RAIN — Artist Wallpaper Gallery                    ║
+║                        Built for Ema Sweeney, Feb 2026                      ║
+╠══════════════════════════════════════════════════════════════════════════════╣
+║                                                                              ║
+║  TO ADD MORE IMAGES:                                                         ║
+║  1. Upload the resized JPG to the /images/ folder in this GitHub repo        ║
+║  2. Find the GALLERY array in the <script> below                             ║
+║  3. Add a new object:                                                        ║
+║     { id: 'artwork-55', title: 'Your Title', src: 'images/filename.jpg' }   ║
+║  4. Commit the updated index.html                                            ║
+║                                                                              ║
+║  TO UPDATE A TITLE:                                                          ║
+║  Find the matching filename in the GALLERY array and change the title value  ║
+║                                                                              ║
+╚══════════════════════════════════════════════════════════════════════════════╝
+-->
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>IPRAY4RAIN — Wallpapers by Ema Sweeney</title>
+<meta name="description" content="Free psychedelic wallpapers for your phone. Digital art by Ema Sweeney.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Syne:wght@400;600;700;800&family=DM+Serif+Display:ital@0;1&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --black: #000000;
+  --pink: #ff2d78;
+  --violet: #7b2fff;
+  --coral: #ff5e5b;
+  --white: #ffffff;
+  --off-white: #e8e0f0;
+  --muted: rgba(255,255,255,0.35);
+  --glow-pink: rgba(255,45,120,0.4);
+  --glow-violet: rgba(123,47,255,0.35);
+}
+
+html { scroll-behavior: smooth; }
+
+body {
+  background: var(--black);
+  color: var(--white);
+  font-family: 'Syne', sans-serif;
+  overflow-x: hidden;
+  cursor: crosshair;
+}
+
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+  pointer-events: none;
+  z-index: 1000;
+  opacity: 0.6;
+}
+
+/* ── Hero ── */
+.hero {
+  min-height: 100svh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 60px 24px 80px;
+  position: relative;
+  overflow: hidden;
+}
+
+.hero-bg {
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(ellipse 80% 60% at 20% 40%, rgba(123,47,255,0.12) 0%, transparent 60%),
+    radial-gradient(ellipse 60% 50% at 80% 60%, rgba(255,45,120,0.10) 0%, transparent 60%),
+    radial-gradient(ellipse 40% 40% at 50% 10%, rgba(255,94,91,0.06) 0%, transparent 50%);
+  pointer-events: none;
+}
+
+.hero-eyebrow {
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.35em;
+  text-transform: uppercase;
+  color: var(--pink);
+  margin-bottom: 28px;
+  opacity: 0;
+  animation: fadeUp 0.8s ease forwards 0.2s;
+}
+
+.hero-name {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: clamp(4.5rem, 18vw, 14rem);
+  line-height: 0.88;
+  background: linear-gradient(135deg, #ffffff 0%, #e0ccff 40%, #ff2d78 80%, #ff5e5b 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  margin-bottom: 24px;
+  opacity: 0;
+  animation: fadeUp 0.9s ease forwards 0.4s;
+  position: relative;
+}
+
+.hero-name::after {
+  content: 'IPRAY4RAIN';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, #ffffff 0%, #e0ccff 40%, #ff2d78 80%, #ff5e5b 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  filter: blur(24px);
+  opacity: 0.3;
+  z-index: -1;
+}
+
+.hero-sub {
+  font-family: 'DM Serif Display', serif;
+  font-style: italic;
+  font-size: clamp(1rem, 2.5vw, 1.35rem);
+  color: var(--off-white);
+  margin-bottom: 16px;
+  opacity: 0;
+  animation: fadeUp 0.9s ease forwards 0.6s;
+}
+
+.hero-desc {
+  font-size: 0.9rem;
+  color: var(--muted);
+  letter-spacing: 0.04em;
+  margin-bottom: 52px;
+  opacity: 0;
+  animation: fadeUp 0.9s ease forwards 0.75s;
+}
+
+.hero-cta {
+  opacity: 0;
+  animation: fadeUp 0.9s ease forwards 0.9s;
+}
+
+.scroll-hint {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  color: var(--muted);
+  font-size: 0.72rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  text-decoration: none;
+  transition: color 0.3s;
+}
+
+.scroll-hint:hover { color: var(--pink); }
+
+.scroll-arrow {
+  width: 1px;
+  height: 48px;
+  background: linear-gradient(to bottom, var(--pink), transparent);
+  animation: scrollPulse 2s ease-in-out infinite;
+}
+
+/* ── Gallery ── */
+.gallery-section {
+  padding: 40px 20px 100px;
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+.section-label {
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: var(--violet);
+  margin-bottom: 40px;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.section-label::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: linear-gradient(to right, var(--violet), transparent);
+  opacity: 0.4;
+}
+
+.gallery-grid {
+  columns: 2;
+  column-gap: 12px;
+}
+
+@media (min-width: 640px) { .gallery-grid { columns: 3; column-gap: 16px; } }
+@media (min-width: 1024px) { .gallery-grid { columns: 4; column-gap: 20px; } }
+
+.gallery-item {
+  break-inside: avoid;
+  margin-bottom: 12px;
+  position: relative;
+  cursor: pointer;
+  border-radius: 8px;
+  overflow: hidden;
+  opacity: 0;
+  transform: translateY(20px);
+  transition: transform 0.5s cubic-bezier(0.22,1,0.36,1), box-shadow 0.4s, opacity 0.5s;
+}
+
+.gallery-item.visible { opacity: 1; transform: translateY(0); }
+
+.gallery-item:hover {
+  transform: translateY(-4px) scale(1.02);
+  box-shadow: 0 0 30px var(--glow-pink), 0 0 60px var(--glow-violet);
+  z-index: 2;
+}
+
+.gallery-item img {
+  width: 100%;
+  display: block;
+  aspect-ratio: 9/19.5;
+  object-fit: cover;
+  transition: transform 0.6s cubic-bezier(0.22,1,0.36,1);
+}
+
+.gallery-item:hover img { transform: scale(1.06); }
+
+.gallery-item-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to top, rgba(0,0,0,0.85) 0%, rgba(0,0,0,0) 50%);
+  opacity: 0;
+  transition: opacity 0.3s;
+  display: flex;
+  align-items: flex-end;
+  padding: 16px;
+}
+
+.gallery-item:hover .gallery-item-overlay { opacity: 1; }
+
+.gallery-item-title {
+  font-family: 'DM Serif Display', serif;
+  font-style: italic;
+  font-size: 1rem;
+  color: var(--white);
+  line-height: 1.2;
+}
+
+.gallery-item-hint {
+  font-size: 0.65rem;
+  color: var(--pink);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  margin-top: 4px;
+}
+
+.gallery-item::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: 8px;
+  border: 1.5px solid transparent;
+  background: linear-gradient(135deg, var(--pink), var(--violet)) border-box;
+  -webkit-mask: linear-gradient(#fff 0 0) padding-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: destination-out;
+  mask-composite: exclude;
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+
+.gallery-item:hover::after { opacity: 1; }
+
+/* ── Lightbox ── */
+.lightbox-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.93);
+  z-index: 900;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.35s;
+  padding: 20px;
+  backdrop-filter: blur(8px);
+}
+
+.lightbox-overlay.active { opacity: 1; pointer-events: all; }
+
+.lightbox-inner {
+  display: flex;
+  gap: 32px;
+  align-items: flex-start;
+  max-height: 90svh;
+  max-width: 900px;
+  width: 100%;
+  transform: translateY(16px);
+  transition: transform 0.35s cubic-bezier(0.22,1,0.36,1);
+}
+
+.lightbox-overlay.active .lightbox-inner { transform: translateY(0); }
+
+.phone-frame {
+  flex-shrink: 0;
+  width: 160px;
+  border-radius: 28px;
+  border: 2px solid rgba(255,255,255,0.15);
+  overflow: hidden;
+  box-shadow: 0 0 40px var(--glow-violet), 0 20px 60px rgba(0,0,0,0.8);
+  position: relative;
+}
+
+.phone-frame::before {
+  content: '';
+  position: absolute;
+  top: 10px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 50px;
+  height: 5px;
+  background: rgba(255,255,255,0.2);
+  border-radius: 3px;
+  z-index: 10;
+}
+
+.phone-frame img {
+  width: 100%;
+  aspect-ratio: 9/19.5;
+  object-fit: cover;
+  display: block;
+}
+
+.lightbox-controls {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  padding-top: 8px;
+}
+
+.lightbox-title {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 2.8rem;
+  line-height: 0.9;
+  background: linear-gradient(135deg, #fff, var(--off-white));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.lightbox-artist {
+  font-size: 0.7rem;
+  letter-spacing: 0.2em;
+  color: var(--muted);
+  text-transform: uppercase;
+  margin-bottom: 4px;
+}
+
+.device-label {
+  font-size: 0.65rem;
+  font-weight: 700;
+  letter-spacing: 0.2em;
+  color: var(--pink);
+  text-transform: uppercase;
+  margin-bottom: 8px;
+}
+
+.device-select {
+  width: 100%;
+  background: rgba(255,255,255,0.06);
+  border: 1px solid rgba(255,255,255,0.12);
+  border-radius: 8px;
+  color: var(--white);
+  font-family: 'Syne', sans-serif;
+  font-size: 0.85rem;
+  padding: 12px 36px 12px 16px;
+  appearance: none;
+  cursor: pointer;
+  outline: none;
+  transition: border-color 0.2s;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%23ff2d78' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 14px center;
+}
+
+.device-select:hover, .device-select:focus { border-color: var(--pink); }
+.device-select option { background: #1a0a2e; color: var(--white); }
+
+.download-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  padding: 16px 28px;
+  background: linear-gradient(135deg, var(--pink), var(--violet));
+  border: none;
+  border-radius: 8px;
+  color: var(--white);
+  font-family: 'Syne', sans-serif;
+  font-size: 0.9rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: transform 0.2s, box-shadow 0.2s, opacity 0.2s;
+  position: relative;
+  overflow: hidden;
+}
+
+.download-btn::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, rgba(255,255,255,0.15), transparent);
+  opacity: 0;
+  transition: opacity 0.2s;
+}
+
+.download-btn:hover::before { opacity: 1; }
+.download-btn:hover { transform: translateY(-2px); box-shadow: 0 8px 30px var(--glow-pink); }
+.download-btn:active { transform: translateY(0); }
+.download-btn.loading { opacity: 0.7; pointer-events: none; }
+
+.wallpaper-tip {
+  background: rgba(255,255,255,0.04);
+  border-left: 2px solid var(--violet);
+  border-radius: 0 6px 6px 0;
+  padding: 12px 16px;
+  font-size: 0.78rem;
+  color: var(--muted);
+  line-height: 1.6;
+  display: none;
+}
+
+.wallpaper-tip.visible { display: block; }
+.wallpaper-tip strong { color: var(--off-white); }
+
+.close-btn {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  width: 44px;
+  height: 44px;
+  border: 1px solid rgba(255,255,255,0.15);
+  border-radius: 50%;
+  background: rgba(0,0,0,0.6);
+  color: var(--white);
+  font-size: 1.1rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: border-color 0.2s, background 0.2s;
+  z-index: 910;
+}
+
+.close-btn:hover { border-color: var(--pink); background: rgba(255,45,120,0.15); }
+
+@media (max-width: 600px) {
+  .lightbox-inner { flex-direction: column; align-items: center; overflow-y: auto; max-height: 85svh; }
+  .phone-frame { width: 130px; }
+  .lightbox-title { font-size: 2rem; }
+}
+
+/* ── Footer ── */
+.footer {
+  border-top: 1px solid rgba(255,255,255,0.06);
+  padding: 60px 24px;
+  text-align: center;
+  position: relative;
+}
+
+.footer-glow {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 300px;
+  height: 1px;
+  background: linear-gradient(to right, transparent, var(--violet), var(--pink), transparent);
+}
+
+.footer-name {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 1.8rem;
+  letter-spacing: 0.1em;
+  background: linear-gradient(135deg, var(--pink), var(--violet));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  margin-bottom: 32px;
+}
+
+.footer-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+  justify-content: center;
+  margin-bottom: 32px;
+}
+
+.footer-link {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--off-white);
+  text-decoration: none;
+  font-size: 0.85rem;
+  font-weight: 600;
+  padding: 10px 18px;
+  border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 100px;
+  transition: all 0.3s;
+}
+
+.footer-link:hover {
+  border-color: var(--pink);
+  color: var(--pink);
+  background: rgba(255,45,120,0.08);
+  transform: translateY(-2px);
+}
+
+.footer-divider { width: 40px; height: 1px; background: rgba(255,255,255,0.1); margin: 0 auto 24px; }
+
+.footer-copy { font-size: 0.75rem; color: var(--muted); line-height: 1.8; }
+.footer-copy a { color: var(--violet); text-decoration: none; }
+
+/* ── Animations ── */
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(24px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes scrollPulse {
+  0%, 100% { opacity: 0.4; }
+  50% { opacity: 1; }
+}
+
+#offscreen-canvas { display: none; }
+</style>
+</head>
+<body>
+
+<section class="hero">
+  <div class="hero-bg"></div>
+  <p class="hero-eyebrow">Free wallpapers — original digital art</p>
+  <h1 class="hero-name">IPRAY4RAIN</h1>
+  <p class="hero-sub">Digital art by Ema Sweeney</p>
+  <p class="hero-desc">Psychedelic wallpapers for your world. Free to download.</p>
+  <div class="hero-cta">
+    <a href="#gallery" class="scroll-hint">
+      <span>Explore the gallery</span>
+      <span class="scroll-arrow"></span>
+    </a>
+  </div>
+</section>
+
+<section class="gallery-section" id="gallery">
+  <div class="section-label">Gallery</div>
+  <div class="gallery-grid" id="galleryGrid"></div>
+</section>
+
+<div class="lightbox-overlay" id="lightbox" role="dialog" aria-modal="true">
+  <button class="close-btn" id="closeBtn" aria-label="Close">✕</button>
+  <div class="lightbox-inner">
+    <div class="phone-frame">
+      <img id="lightboxImg" src="" alt="">
+    </div>
+    <div class="lightbox-controls">
+      <div>
+        <p class="lightbox-artist">IPRAY4RAIN · Ema Sweeney</p>
+        <h2 class="lightbox-title" id="lightboxTitle">–</h2>
+      </div>
+      <div>
+        <p class="device-label">Choose your device</p>
+        <select class="device-select" id="deviceSelect">
+          <option value="1320x2868">iPhone 17 Pro Max / 16 Pro Max (1320×2868)</option>
+          <option value="1260x2736">iPhone 17 Air (1260×2736)</option>
+          <option value="1206x2622">iPhone 17 / 17 Pro / 16 Pro (1206×2622)</option>
+          <option value="1290x2796">iPhone 16 Plus / 15 Plus / 15 Pro Max (1290×2796)</option>
+          <option value="1179x2556">iPhone 16 / 15 / 15 Pro (1179×2556)</option>
+          <option value="1170x2532" selected>iPhone 14 / 13 / 12 Pro (1170×2532) ← most common</option>
+          <option value="1284x2778">iPhone 13 Pro Max / 12 Pro Max (1284×2778)</option>
+          <option value="1080x2340">iPhone 13 mini / 12 mini (1080×2340)</option>
+          <option value="1125x2436">iPhone 11 Pro / XS / X (1125×2436)</option>
+          <option value="828x1792">iPhone 11 / XR (828×1792)</option>
+          <option value="1080x2340">Samsung Galaxy S/Ultra (1080×2340)</option>
+          <option value="1080x2400">Google Pixel (1080×2400)</option>
+        </select>
+      </div>
+      <button class="download-btn" id="downloadBtn">
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+          <path d="M8 1v9M4 7l4 4 4-4M2 14h12" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+        Download Wallpaper
+      </button>
+      <div class="wallpaper-tip" id="wallpaperTip">
+        <strong>Saved!</strong> Open your Photos app → find the image → tap Share → Set as Wallpaper.
+      </div>
+    </div>
+  </div>
+</div>
+
+<canvas id="offscreen-canvas"></canvas>
+
+<footer class="footer">
+  <div class="footer-glow"></div>
+  <p class="footer-name">IPRAY4RAIN</p>
+  <div class="footer-links">
+    <a href="https://www.instagram.com/emasweeney/" target="_blank" rel="noopener" class="footer-link">📷 @emasweeney</a>
+    <a href="https://www.instagram.com/ipray4rain/" target="_blank" rel="noopener" class="footer-link">📷 @ipray4rain</a>
+    <a href="#" class="footer-link" style="opacity:0.4;pointer-events:none;">🌐 emasweeney.com — coming soon</a>
+    <a href="#paypal" class="footer-link">☕ Support Ema's Work</a>
+  </div>
+  <div class="footer-divider"></div>
+  <p class="footer-copy">
+    All art © Ema Sweeney. Free for personal use as wallpaper.<br>
+    <span style="opacity:0.5;font-size:0.68rem;">Built with ❤ by a friend.</span>
+  </p>
+</footer>
+
+<script>
+// ═══════════════════════════════════════════════════════
+//  GALLERY — all 54 artworks
+//  Titles marked * are placeholders — update with Ema's real titles
+// ═══════════════════════════════════════════════════════
+const GALLERY = [
+  { id: 'artwork-01',  title: 'Untitled I',        src: 'images/897F7836-A06A-4F66-8142-9FC0A0300233_wallpaper.jpg' },
+  { id: 'artwork-02',  title: 'Untitled II',       src: 'images/D04B76D3-4679-44A7-9367-9B197896F993_wallpaper.jpg' },
+  { id: 'artwork-03',  title: 'Untitled III',      src: 'images/F12B2A3D-D425-4215-BF13-A30CFE3888AE_wallpaper.jpg' },
+  { id: 'artwork-04',  title: 'Study I',           src: 'images/IMG_0240_wallpaper.jpg' },
+  { id: 'artwork-05',  title: 'Study II',          src: 'images/IMG_0241_wallpaper.jpg' },
+  { id: 'artwork-06',  title: 'Study III',         src: 'images/IMG_0248_wallpaper.jpg' },
+  { id: 'artwork-07',  title: 'Fracture I',        src: 'images/IMG_0253_wallpaper.jpg' },
+  { id: 'artwork-08',  title: 'Fracture II',       src: 'images/IMG_0254_wallpaper.jpg' },
+  { id: 'artwork-09',  title: 'Fracture III',      src: 'images/IMG_0255_wallpaper.jpg' },
+  { id: 'artwork-10',  title: 'Fracture IV',       src: 'images/IMG_0256_wallpaper.jpg' },
+  { id: 'artwork-11',  title: 'Fracture V',        src: 'images/IMG_0257_wallpaper.jpg' },
+  { id: 'artwork-12',  title: 'Fracture VI',       src: 'images/IMG_0258_wallpaper.jpg' },
+  { id: 'artwork-13',  title: 'Fracture VII',      src: 'images/IMG_0259_wallpaper.jpg' },
+  { id: 'artwork-14',  title: 'Vision I',          src: 'images/IMG_0966_wallpaper.jpg' },
+  { id: 'artwork-15',  title: 'Vision II',         src: 'images/IMG_0967_wallpaper.jpg' },
+  { id: 'artwork-16',  title: 'Vision III',        src: 'images/IMG_0968_wallpaper.jpg' },
+  { id: 'artwork-17',  title: 'Vision IV',         src: 'images/IMG_0969_wallpaper.jpg' },
+  { id: 'artwork-18',  title: 'Vision V',          src: 'images/IMG_0970_wallpaper.jpg' },
+  { id: 'artwork-19',  title: 'Vision VI',         src: 'images/IMG_0971_wallpaper.jpg' },
+  { id: 'artwork-20',  title: 'Vision VII',        src: 'images/IMG_0972_wallpaper.jpg' },
+  { id: 'artwork-21',  title: 'Vision VIII',       src: 'images/IMG_0973_wallpaper.jpg' },
+  { id: 'artwork-22',  title: 'Vision IX',         src: 'images/IMG_0974_wallpaper.jpg' },
+  { id: 'artwork-23',  title: 'Vision X',          src: 'images/IMG_0975_wallpaper.jpg' },
+  { id: 'artwork-24',  title: 'Vision XI',         src: 'images/IMG_0976_wallpaper.jpg' },
+  { id: 'artwork-25',  title: 'Vision XII',        src: 'images/IMG_0977_wallpaper.jpg' },
+  { id: 'artwork-26',  title: 'Vision XIII',       src: 'images/IMG_0978_wallpaper.jpg' },
+  { id: 'artwork-27',  title: 'Vision XIV',        src: 'images/IMG_0979_wallpaper.jpg' },
+  { id: 'artwork-28',  title: 'Vision XV',         src: 'images/IMG_0980_wallpaper.jpg' },
+  { id: 'artwork-29',  title: 'Bloom I',           src: 'images/IMG_1125_wallpaper.jpg' },
+  { id: 'artwork-30',  title: 'Bloom II',          src: 'images/IMG_1126_wallpaper.jpg' },
+  { id: 'artwork-31',  title: 'Bloom III',         src: 'images/IMG_1127_wallpaper.jpg' },
+  { id: 'artwork-32',  title: 'Bloom IV',          src: 'images/IMG_1128_wallpaper.jpg' },
+  { id: 'artwork-33',  title: 'Bloom V',           src: 'images/IMG_1129_wallpaper.jpg' },
+  { id: 'artwork-34',  title: 'Bloom VI',          src: 'images/IMG_1130_wallpaper.jpg' },
+  { id: 'artwork-35',  title: 'Bloom VII',         src: 'images/IMG_1131_wallpaper.jpg' },
+  { id: 'artwork-36',  title: 'Bloom VIII',        src: 'images/IMG_1133_wallpaper.jpg' },
+  { id: 'artwork-37',  title: 'Bloom IX',          src: 'images/IMG_1134_wallpaper.jpg' },
+  { id: 'artwork-38',  title: 'Bloom X',           src: 'images/IMG_1135_wallpaper.jpg' },
+  { id: 'artwork-39',  title: 'Bloom XI',          src: 'images/IMG_1136_wallpaper.jpg' },
+  { id: 'artwork-40',  title: 'Bloom XII',         src: 'images/IMG_1137_wallpaper.jpg' },
+  { id: 'artwork-41',  title: 'Bloom XIII',        src: 'images/IMG_1138_wallpaper.jpg' },
+  { id: 'artwork-42',  title: 'Bloom XIV',         src: 'images/IMG_1139_wallpaper.jpg' },
+  { id: 'artwork-43',  title: 'Bloom XV',          src: 'images/IMG_1140_wallpaper.jpg' },
+  { id: 'artwork-44',  title: 'Melt I',            src: 'images/IMG_1211_wallpaper.jpg' },
+  { id: 'artwork-45',  title: 'Melt II',           src: 'images/IMG_1212_wallpaper.jpg' },
+  { id: 'artwork-46',  title: 'Melt III',          src: 'images/IMG_1213_wallpaper.jpg' },
+  { id: 'artwork-47',  title: 'Melt IV',           src: 'images/IMG_1214_wallpaper.jpg' },
+  { id: 'artwork-48',  title: 'Melt V',            src: 'images/IMG_1215_wallpaper.jpg' },
+  { id: 'artwork-49',  title: 'Kaleidoscope I',    src: 'images/IMG_6470_wallpaper.jpg' },
+  { id: 'artwork-50',  title: 'Prism I',           src: 'images/IMG_8334_wallpaper.jpg' },
+  { id: 'artwork-51',  title: 'Prism II',          src: 'images/IMG_8335_wallpaper.jpg' },
+  { id: 'artwork-52',  title: 'Prism III',         src: 'images/IMG_8336_wallpaper.jpg' },
+  { id: 'artwork-53',  title: 'Prism IV',          src: 'images/IMG_8338_wallpaper.jpg' },
+  { id: 'artwork-54',  title: 'Original',          src: 'images/Untitled_Artwork_wallpaper.jpg' },
+];
+
+// ── Build gallery ──
+const grid = document.getElementById('galleryGrid');
+let currentArtwork = null;
+
+function buildGallery() {
+  GALLERY.forEach((art) => {
+    const item = document.createElement('div');
+    item.className = 'gallery-item';
+    item.innerHTML = `
+      <img src="${art.src}" alt="${art.title}" loading="lazy">
+      <div class="gallery-item-overlay">
+        <div>
+          <p class="gallery-item-title">${art.title}</p>
+          <p class="gallery-item-hint">Tap to download</p>
+        </div>
+      </div>
+    `;
+    item.addEventListener('click', () => openLightbox(art));
+    grid.appendChild(item);
+  });
+
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach((entry, i) => {
+      if (entry.isIntersecting) {
+        setTimeout(() => entry.target.classList.add('visible'), i * 40);
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.05 });
+
+  document.querySelectorAll('.gallery-item').forEach(el => observer.observe(el));
+}
+
+// ── Lightbox ──
+const lightbox = document.getElementById('lightbox');
+const lightboxImg = document.getElementById('lightboxImg');
+const lightboxTitle = document.getElementById('lightboxTitle');
+
+function openLightbox(art) {
+  currentArtwork = art;
+  lightboxImg.src = art.src;
+  lightboxImg.alt = art.title;
+  lightboxTitle.textContent = art.title;
+  document.getElementById('wallpaperTip').classList.remove('visible');
+  lightbox.classList.add('active');
+  document.body.style.overflow = 'hidden';
+}
+
+function closeLightbox() {
+  lightbox.classList.remove('active');
+  document.body.style.overflow = '';
+  currentArtwork = null;
+}
+
+document.getElementById('closeBtn').addEventListener('click', closeLightbox);
+lightbox.addEventListener('click', e => { if (e.target === lightbox) closeLightbox(); });
+document.addEventListener('keydown', e => { if (e.key === 'Escape') closeLightbox(); });
+
+// ── Canvas crop/scale ──
+function getDeviceDimensions() {
+  const [w, h] = document.getElementById('deviceSelect').value.split('x').map(Number);
+  return { w, h };
+}
+
+function renderToCanvas(imgEl, targetW, targetH) {
+  const canvas = document.getElementById('offscreen-canvas');
+  canvas.width = targetW;
+  canvas.height = targetH;
+  const ctx = canvas.getContext('2d');
+  const scale = Math.max(targetW / imgEl.naturalWidth, targetH / imgEl.naturalHeight);
+  const drawW = imgEl.naturalWidth * scale;
+  const drawH = imgEl.naturalHeight * scale;
+  ctx.drawImage(imgEl, (targetW - drawW) / 2, (targetH - drawH) / 2, drawW, drawH);
+  return canvas;
+}
+
+// ── Download ──
+const downloadBtn = document.getElementById('downloadBtn');
+
+downloadBtn.addEventListener('click', async () => {
+  if (!currentArtwork) return;
+  downloadBtn.classList.add('loading');
+  downloadBtn.textContent = 'Preparing…';
+
+  const { w, h } = getDeviceDimensions();
+  const deviceLabel = document.getElementById('deviceSelect').selectedOptions[0].text
+    .replace(/\s*\(.*\)/, '').trim().replace(/[\s/]+/g, '-').toLowerCase();
+
+  const img = new Image();
+  img.crossOrigin = 'anonymous';
+
+  img.onload = async () => {
+    const canvas = renderToCanvas(img, w, h);
+    const filename = `ipray4rain-${currentArtwork.id}-${deviceLabel}.png`;
+
+    canvas.toBlob(async (blob) => {
+      const file = new File([blob], filename, { type: 'image/png' });
+
+      if (navigator.canShare && navigator.canShare({ files: [file] })) {
+        try {
+          await navigator.share({ files: [file], title: currentArtwork.title });
+          showTip();
+        } catch (err) {
+          if (err.name !== 'AbortError') fallbackDownload(blob, filename);
+        }
+      } else {
+        fallbackDownload(blob, filename);
+      }
+      resetBtn();
+    }, 'image/png');
+  };
+
+  img.onerror = () => { alert('Could not load image.'); resetBtn(); };
+  img.src = currentArtwork.src;
+});
+
+function fallbackDownload(blob, filename) {
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = filename;
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+  setTimeout(() => URL.revokeObjectURL(url), 5000);
+  showTip();
+}
+
+function showTip() { document.getElementById('wallpaperTip').classList.add('visible'); }
+
+function resetBtn() {
+  downloadBtn.classList.remove('loading');
+  downloadBtn.innerHTML = `
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+      <path d="M8 1v9M4 7l4 4 4-4M2 14h12" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+    Download Wallpaper
+  `;
+}
+
+buildGallery();
+</script>
+</body>
+</html>
