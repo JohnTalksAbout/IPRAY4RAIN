@@ -618,8 +618,8 @@ body::before {
     <a href="https://www.instagram.com/ipray4rain/" target="_blank" rel="noopener" class="footer-link">📷 @ipray4rain</a>
     <a href="https://www.instagram.com/emasweeney/" target="_blank" rel="noopener" class="footer-link">📷 @emasweeney</a>
     <a href="https://emasweeney.com" target="_blank" rel="noopener" class="footer-link">🌐 emasweeney.com</a>
-    <a href="mailto:iprayforrain54@gmail.com" class="footer-link">✉️ iprayforrain54@gmail.com</a>
-    <a href="https://paypal.me/emasweeneytattoo" target="_blank" rel="noopener" class="footer-link">☕ Support Ema's Work</a>
+    <a href="mailto:iprayforrain54@gmail.com" class="footer-link" id="emailLink" onclick="copyEmail(event)">✉️ iprayforrain54@gmail.com</a>
+    <a href="https://www.paypal.com/paypalme/emasweeneytattoo" target="_blank" rel="noopener" class="footer-link">☕ Support Ema's Work</a>
   </div>
   <div class="footer-divider"></div>
   <p class="footer-copy">
@@ -826,6 +826,18 @@ function resetBtn() {
     </svg>
     Download Wallpaper
   `;
+}
+
+function copyEmail(e) {
+  // Try mailto first, also copy to clipboard as fallback
+  navigator.clipboard.writeText('iprayforrain54@gmail.com').then(() => {
+    const el = document.getElementById('emailLink');
+    const orig = el.textContent;
+    el.textContent = '✅ Copied to clipboard!';
+    setTimeout(() => el.textContent = orig, 2500);
+  }).catch(() => {
+    // mailto will still fire naturally
+  });
 }
 
 buildGallery();
