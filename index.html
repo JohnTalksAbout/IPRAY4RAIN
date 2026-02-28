@@ -4,17 +4,14 @@
 ║                    IPRAY4RAIN — Artist Wallpaper Gallery                    ║
 ║                        Built for Ema Sweeney, Feb 2026                      ║
 ╠══════════════════════════════════════════════════════════════════════════════╣
-║                                                                              ║
 ║  TO ADD MORE IMAGES:                                                         ║
-║  1. Upload the resized JPG to the /images/ folder in this GitHub repo        ║
+║  1. Upload resized JPG to the /images/ folder in this GitHub repo            ║
 ║  2. Find the GALLERY array in the <script> below                             ║
-║  3. Add a new object:                                                        ║
-║     { id: 'artwork-55', title: 'Your Title', src: 'images/filename.jpg' }   ║
+║  3. Add: { id: 'artwork-55', title: 'Title', src: 'images/file.jpg' }       ║
 ║  4. Commit the updated index.html                                            ║
 ║                                                                              ║
 ║  TO UPDATE A TITLE:                                                          ║
-║  Find the matching filename in the GALLERY array and change the title value  ║
-║                                                                              ║
+║  Find the filename in GALLERY and change the title value                     ║
 ╚══════════════════════════════════════════════════════════════════════════════╝
 -->
 <html lang="en">
@@ -41,7 +38,6 @@
   --black: #000000;
   --pink: #ff2d78;
   --violet: #7b2fff;
-  --coral: #ff5e5b;
   --white: #ffffff;
   --off-white: #e8e0f0;
   --muted: rgba(255,255,255,0.35);
@@ -69,7 +65,7 @@ body::before {
   opacity: 0.6;
 }
 
-/* ── Hero ── */
+/* HERO */
 .hero {
   min-height: 100svh;
   display: flex;
@@ -149,10 +145,7 @@ body::before {
   animation: fadeUp 0.9s ease forwards 0.75s;
 }
 
-.hero-cta {
-  opacity: 0;
-  animation: fadeUp 0.9s ease forwards 0.9s;
-}
+.hero-cta { opacity: 0; animation: fadeUp 0.9s ease forwards 0.9s; }
 
 .scroll-hint {
   display: flex;
@@ -176,7 +169,7 @@ body::before {
   animation: scrollPulse 2s ease-in-out infinite;
 }
 
-/* ── Gallery ── */
+/* GALLERY */
 .gallery-section {
   padding: 40px 20px 100px;
   max-width: 1400px;
@@ -285,7 +278,7 @@ body::before {
 
 .gallery-item:hover::after { opacity: 1; }
 
-/* ── Lightbox ── */
+/* LIGHTBOX */
 .lightbox-overlay {
   position: fixed;
   inset: 0;
@@ -344,6 +337,7 @@ body::before {
   aspect-ratio: 9/19.5;
   object-fit: cover;
   display: block;
+  transition: filter 0.1s;
 }
 
 .lightbox-controls {
@@ -372,6 +366,84 @@ body::before {
   margin-bottom: 4px;
 }
 
+/* BRIGHTNESS */
+.brightness-wrap { display: flex; flex-direction: column; gap: 8px; }
+
+.brightness-label-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.brightness-label {
+  font-size: 0.65rem;
+  font-weight: 700;
+  letter-spacing: 0.2em;
+  color: var(--pink);
+  text-transform: uppercase;
+}
+
+.brightness-value {
+  font-size: 0.75rem;
+  color: var(--muted);
+  min-width: 36px;
+  text-align: right;
+}
+
+.brightness-slider {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 100%;
+  height: 3px;
+  border-radius: 2px;
+  outline: none;
+  cursor: pointer;
+}
+
+.brightness-slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: var(--white);
+  box-shadow: 0 0 8px var(--glow-pink);
+  cursor: pointer;
+  transition: transform 0.15s, box-shadow 0.15s;
+}
+
+.brightness-slider::-webkit-slider-thumb:hover {
+  transform: scale(1.2);
+  box-shadow: 0 0 14px var(--glow-pink);
+}
+
+.brightness-slider::-moz-range-thumb {
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: var(--white);
+  border: none;
+  box-shadow: 0 0 8px var(--glow-pink);
+  cursor: pointer;
+}
+
+.brightness-reset {
+  font-size: 0.65rem;
+  color: var(--muted);
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+  transition: color 0.2s;
+  font-family: 'Syne', sans-serif;
+  letter-spacing: 0.05em;
+  text-align: left;
+}
+
+.brightness-reset:hover { color: var(--pink); }
+
+/* DEVICE SELECT */
 .device-label {
   font-size: 0.65rem;
   font-weight: 700;
@@ -402,6 +474,7 @@ body::before {
 .device-select:hover, .device-select:focus { border-color: var(--pink); }
 .device-select option { background: #1a0a2e; color: var(--white); }
 
+/* DOWNLOAD BUTTON */
 .download-btn {
   display: flex;
   align-items: center;
@@ -478,90 +551,7 @@ body::before {
   .lightbox-title { font-size: 2rem; }
 }
 
-.brightness-wrap {
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-}
-
-.brightness-label-row {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-
-.brightness-label {
-  font-size: 0.65rem;
-  font-weight: 700;
-  letter-spacing: 0.2em;
-  color: var(--pink);
-  text-transform: uppercase;
-}
-
-.brightness-value {
-  font-size: 0.75rem;
-  color: var(--muted);
-  font-variant-numeric: tabular-nums;
-  min-width: 36px;
-  text-align: right;
-}
-
-.brightness-slider {
-  -webkit-appearance: none;
-  appearance: none;
-  width: 100%;
-  height: 3px;
-  border-radius: 2px;
-  background: linear-gradient(to right, var(--pink) 0%, var(--pink) 50%, rgba(255,255,255,0.15) 50%, rgba(255,255,255,0.15) 100%);
-  outline: none;
-  cursor: pointer;
-}
-
-.brightness-slider::-webkit-slider-thumb {
-  -webkit-appearance: none;
-  appearance: none;
-  width: 18px;
-  height: 18px;
-  border-radius: 50%;
-  background: var(--white);
-  box-shadow: 0 0 8px var(--glow-pink);
-  cursor: pointer;
-  transition: transform 0.15s, box-shadow 0.15s;
-}
-
-.brightness-slider::-webkit-slider-thumb:hover {
-  transform: scale(1.2);
-  box-shadow: 0 0 14px var(--glow-pink);
-}
-
-.brightness-slider::-moz-range-thumb {
-  width: 18px;
-  height: 18px;
-  border-radius: 50%;
-  background: var(--white);
-  border: none;
-  box-shadow: 0 0 8px var(--glow-pink);
-  cursor: pointer;
-}
-
-.brightness-reset {
-  font-size: 0.65rem;
-  color: var(--muted);
-  background: none;
-  border: none;
-  cursor: pointer;
-  padding: 0;
-  text-decoration: underline;
-  text-underline-offset: 2px;
-  transition: color 0.2s;
-  text-align: left;
-  font-family: 'Syne', sans-serif;
-  letter-spacing: 0.05em;
-}
-
-.brightness-reset:hover { color: var(--pink); }
-
-/* ── Support Section ── */
+/* SUPPORT */
 .support-section {
   padding: 100px 24px;
   text-align: center;
@@ -579,11 +569,7 @@ body::before {
   pointer-events: none;
 }
 
-.support-inner {
-  max-width: 580px;
-  margin: 0 auto;
-  position: relative;
-}
+.support-inner { max-width: 580px; margin: 0 auto; position: relative; }
 
 .support-glow {
   position: absolute;
@@ -620,7 +606,6 @@ body::before {
   line-height: 1.8;
   color: rgba(255,255,255,0.6);
   margin-bottom: 40px;
-  font-weight: 400;
 }
 
 .support-btn {
@@ -659,13 +644,9 @@ body::before {
   box-shadow: 0 12px 40px rgba(255,45,120,0.45), 0 4px 20px rgba(123,47,255,0.3);
 }
 
-.support-note {
-  font-size: 0.75rem;
-  color: var(--muted);
-  letter-spacing: 0.05em;
-}
+.support-note { font-size: 0.75rem; color: var(--muted); letter-spacing: 0.05em; }
 
-/* ── Footer ── */
+/* FOOTER */
 .footer {
   border-top: 1px solid rgba(255,255,255,0.06);
   padding: 60px 24px;
@@ -724,19 +705,17 @@ body::before {
 }
 
 .footer-divider { width: 40px; height: 1px; background: rgba(255,255,255,0.1); margin: 0 auto 24px; }
-
 .footer-copy { font-size: 0.75rem; color: var(--muted); line-height: 1.8; }
-.footer-copy a { color: var(--violet); text-decoration: none; }
 
-/* ── Animations ── */
+/* ANIMATIONS */
 @keyframes fadeUp {
   from { opacity: 0; transform: translateY(24px); }
-  to { opacity: 1; transform: translateY(0); }
+  to   { opacity: 1; transform: translateY(0); }
 }
 
 @keyframes scrollPulse {
   0%, 100% { opacity: 0.4; }
-  50% { opacity: 1; }
+  50%       { opacity: 1; }
 }
 
 #offscreen-canvas { display: none; }
@@ -744,6 +723,7 @@ body::before {
 </head>
 <body>
 
+<!-- HERO -->
 <section class="hero">
   <div class="hero-bg"></div>
   <p class="hero-eyebrow">Free wallpapers — original digital art</p>
@@ -758,46 +738,47 @@ body::before {
   </div>
 </section>
 
+<!-- GALLERY -->
 <section class="gallery-section" id="gallery">
   <div class="section-label">Gallery</div>
   <div class="gallery-grid" id="galleryGrid"></div>
 </section>
 
-<div class="lightbox-overlay" id="lightbox" role="dialog" aria-modal="true">
-  <button class="close-btn" id="closeBtn" aria-label="Close">✕</button>
+<!-- LIGHTBOX -->
+<div class="lightbox-overlay" id="lightbox" role="dialog" aria-modal="true" aria-labelledby="lightboxTitle">
+  <button class="close-btn" id="closeBtn" aria-label="Close">&#x2715;</button>
   <div class="lightbox-inner">
     <div class="phone-frame">
-      <img id="lightboxImg" src="" alt="">
+      <img id="lightboxImg" src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" alt="">
     </div>
     <div class="lightbox-controls">
       <div>
-        <p class="lightbox-artist">IPRAY4RAIN · Ema Sweeney</p>
-        <h2 class="lightbox-title" id="lightboxTitle">–</h2>
+        <p class="lightbox-artist">IPRAY4RAIN &middot; Ema Sweeney</p>
+        <h2 class="lightbox-title" id="lightboxTitle">Select an artwork</h2>
       </div>
-      <div>
       <div class="brightness-wrap">
         <div class="brightness-label-row">
           <span class="brightness-label">Brightness</span>
           <span class="brightness-value" id="brightnessVal">100%</span>
         </div>
-        <input type="range" class="brightness-slider" id="brightnessSlider"
-          min="30" max="180" value="100" step="1">
+        <input type="range" class="brightness-slider" id="brightnessSlider" min="30" max="180" value="100" step="1">
         <button class="brightness-reset" id="brightnessReset">Reset to original</button>
       </div>
-
-        <p class="device-label">Choose your device <span style="font-weight:400;color:var(--muted);letter-spacing:0">— iPhone 14/13/12 pre-selected</span></p>
+      <div>
+        <p class="device-label">Choose your device <span style="font-weight:400;color:var(--muted);letter-spacing:0">&#8212; iPhone 14/13/12 pre-selected</span></p>
         <select class="device-select" id="deviceSelect">
-          <option value="1320x2868">iPhone 17 Pro Max / 16 Pro Max (1320×2868)</option>          <option value="1260x2736">iPhone 17 Air (1260×2736)</option>
-          <option value="1206x2622">iPhone 17 / 17 Pro / 16 Pro (1206×2622)</option>
-          <option value="1290x2796">iPhone 16 Plus / 15 Plus / 15 Pro Max (1290×2796)</option>
-          <option value="1179x2556">iPhone 16 / 15 / 15 Pro (1179×2556)</option>
-          <option value="1170x2532" selected>iPhone 14 / 13 / 12 Pro (1170×2532)</option>
-          <option value="1284x2778">iPhone 13 Pro Max / 12 Pro Max (1284×2778)</option>
-          <option value="1080x2340">iPhone 13 mini / 12 mini (1080×2340)</option>
-          <option value="1125x2436">iPhone 11 Pro / XS / X (1125×2436)</option>
-          <option value="828x1792">iPhone 11 / XR (828×1792)</option>
-          <option value="1080x2340">Samsung Galaxy S/Ultra (1080×2340)</option>
-          <option value="1080x2400">Google Pixel (1080×2400)</option>
+          <option value="1320x2868">iPhone 17 Pro Max / 16 Pro Max (1320x2868)</option>
+          <option value="1260x2736">iPhone 17 Air (1260x2736)</option>
+          <option value="1206x2622">iPhone 17 / 17 Pro / 16 Pro (1206x2622)</option>
+          <option value="1290x2796">iPhone 16 Plus / 15 Plus / 15 Pro Max (1290x2796)</option>
+          <option value="1179x2556">iPhone 16 / 15 / 15 Pro (1179x2556)</option>
+          <option value="1170x2532" selected>iPhone 14 / 13 / 12 Pro (1170x2532)</option>
+          <option value="1284x2778">iPhone 13 Pro Max / 12 Pro Max (1284x2778)</option>
+          <option value="1080x2340">iPhone 13 mini / 12 mini (1080x2340)</option>
+          <option value="1125x2436">iPhone 11 Pro / XS / X (1125x2436)</option>
+          <option value="828x1792">iPhone 11 / XR (828x1792)</option>
+          <option value="1080x2340">Samsung Galaxy S/Ultra (1080x2340)</option>
+          <option value="1080x2400">Google Pixel (1080x2400)</option>
         </select>
       </div>
       <button class="download-btn" id="downloadBtn">
@@ -807,7 +788,7 @@ body::before {
         Download Wallpaper
       </button>
       <div class="wallpaper-tip" id="wallpaperTip">
-        <strong>Saved!</strong> To set as wallpaper: open <strong>Settings → Wallpaper → Add New Wallpaper</strong> → choose the image from your Photos.
+        <strong>Saved!</strong> To set as wallpaper: open <strong>Settings &rarr; Wallpaper &rarr; Add New Wallpaper</strong> and choose the image from your Photos.
       </div>
     </div>
   </div>
@@ -815,14 +796,14 @@ body::before {
 
 <canvas id="offscreen-canvas"></canvas>
 
-<!-- ══ SUPPORT SECTION ══════════════════════════════════════════ -->
+<!-- SUPPORT -->
 <section class="support-section">
   <div class="support-inner">
     <div class="support-glow"></div>
-    <p class="support-eyebrow">Free — always</p>
+    <p class="support-eyebrow">Free &#8212; always</p>
     <h2 class="support-heading">50 wallpapers.<br>No catch.</h2>
     <p class="support-body">
-      Every piece here is Ema's original work — made by hand, given away freely.
+      Every piece here is Ema's original work &#8212; made by hand, given away freely.
       If her art has ended up on your phone and it makes you smile every time you
       unlock it, a small donation means she can keep creating.
     </p>
@@ -833,153 +814,181 @@ body::before {
       </svg>
       Support Ema's Work
     </a>
-    <p class="support-note">Every contribution goes directly to Ema ❤</p>
+    <p class="support-note">Every contribution goes directly to Ema &#10084;</p>
   </div>
 </section>
 
+<!-- FOOTER -->
 <footer class="footer">
   <div class="footer-glow"></div>
   <p class="footer-name">IPRAY4RAIN</p>
   <div class="footer-links">
-    <a href="https://www.instagram.com/ipray4rain/" target="_blank" rel="noopener noreferrer" class="footer-link">📷 @ipray4rain</a>
-    <a href="https://www.instagram.com/emasweeney/" target="_blank" rel="noopener noreferrer" class="footer-link">📷 @emasweeney</a>
-    <a href="https://emasweeney.com" target="_blank" rel="noopener noreferrer" class="footer-link">🌐 emasweeney.com</a>
-    <a href="/cdn-cgi/l/email-protection#fd948d8f9c849b928f8f9c9493c8c9bd9a909c9491d39e9290" class="footer-link" id="emailLink" onclick="copyEmail(event)">✉️ <span class="__cf_email__" data-cfemail="046d7476657d626b7676656d6a3130446369656d682a676b69">[email&#160;protected]</span></a>
-    <a href="https://www.paypal.com/paypalme/emasweeneytattoo" target="_blank" rel="noopener noreferrer" class="footer-link">☕ Support Ema's Work</a>
+    <a href="https://www.instagram.com/ipray4rain/" target="_blank" rel="noopener noreferrer" class="footer-link">&#128247; @ipray4rain</a>
+    <a href="https://www.instagram.com/emasweeney/" target="_blank" rel="noopener noreferrer" class="footer-link">&#128247; @emasweeney</a>
+    <a href="https://emasweeney.com" target="_blank" rel="noopener noreferrer" class="footer-link">&#127760; emasweeney.com</a>
+    <a href="mailto:iprayforrain54@gmail.com" class="footer-link" id="emailLink" onclick="copyEmail(event)">&#9993;&#65039; iprayforrain54@gmail.com</a>
+    <a href="https://www.paypal.com/paypalme/emasweeneytattoo" target="_blank" rel="noopener noreferrer" class="footer-link">&#9749; Support Ema's Work</a>
   </div>
   <div class="footer-divider"></div>
   <p class="footer-copy">
-    All art © Ema Sweeney. Free for personal use as wallpaper.<br>
-    <span style="opacity:0.5;font-size:0.68rem;">Built with ❤ by a friend.</span>
+    All art &copy; Ema Sweeney. Free for personal use as wallpaper.<br>
+    <span style="opacity:0.5;font-size:0.68rem;">Built with &#10084; by a friend.</span>
   </p>
 </footer>
 
-<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
-// ═══════════════════════════════════════════════════════
-//  GALLERY — all 54 artworks
-//  Titles marked * are placeholders — update with Ema's real titles
-// ═══════════════════════════════════════════════════════
+<script>
 const GALLERY = [
-
-  { id: 'artwork-04',  title: 'Study I',           src: 'images/IMG_0240_wallpaper.jpg' },
-  { id: 'artwork-05',  title: 'Study II',          src: 'images/IMG_0241_wallpaper.jpg' },
-  { id: 'artwork-06',  title: 'Study III',         src: 'images/IMG_0248_wallpaper.jpg' },
-  { id: 'artwork-07',  title: 'Fracture I',        src: 'images/IMG_0253_wallpaper.jpg' },
-  { id: 'artwork-08',  title: 'Fracture II',       src: 'images/IMG_0254_wallpaper.jpg' },
-  { id: 'artwork-09',  title: 'Fracture III',      src: 'images/IMG_0255_wallpaper.jpg' },
-  { id: 'artwork-10',  title: 'Fracture IV',       src: 'images/IMG_0256_wallpaper.jpg' },
-  { id: 'artwork-11',  title: 'Fracture V',        src: 'images/IMG_0257_wallpaper.jpg' },
-  { id: 'artwork-12',  title: 'Fracture VI',       src: 'images/IMG_0258_wallpaper.jpg' },
-  { id: 'artwork-13',  title: 'Fracture VII',      src: 'images/IMG_0259_wallpaper.jpg' },
-  { id: 'artwork-14',  title: 'Vision I',          src: 'images/IMG_0966_wallpaper.jpg' },
-  { id: 'artwork-15',  title: 'Vision II',         src: 'images/IMG_0967_wallpaper.jpg' },
-  { id: 'artwork-16',  title: 'Vision III',        src: 'images/IMG_0968_wallpaper.jpg' },
-  { id: 'artwork-17',  title: 'Vision IV',         src: 'images/IMG_0969_wallpaper.jpg' },
-  { id: 'artwork-18',  title: 'Vision V',          src: 'images/IMG_0970_wallpaper.jpg' },
-  { id: 'artwork-19',  title: 'Vision VI',         src: 'images/IMG_0971_wallpaper.jpg' },
-  { id: 'artwork-20',  title: 'Vision VII',        src: 'images/IMG_0972_wallpaper.jpg' },
-  { id: 'artwork-21',  title: 'Vision VIII',       src: 'images/IMG_0973_wallpaper.jpg' },
-  { id: 'artwork-22',  title: 'Vision IX',         src: 'images/IMG_0974_wallpaper.jpg' },
-  { id: 'artwork-23',  title: 'Vision X',          src: 'images/IMG_0975_wallpaper.jpg' },
-  { id: 'artwork-24',  title: 'Vision XI',         src: 'images/IMG_0976_wallpaper.jpg' },
-  { id: 'artwork-25',  title: 'Vision XII',        src: 'images/IMG_0977_wallpaper.jpg' },
-  { id: 'artwork-26',  title: 'Vision XIII',       src: 'images/IMG_0978_wallpaper.jpg' },
-  { id: 'artwork-27',  title: 'Vision XIV',        src: 'images/IMG_0979_wallpaper.jpg' },
-  { id: 'artwork-28',  title: 'Vision XV',         src: 'images/IMG_0980_wallpaper.jpg' },
-  { id: 'artwork-29',  title: 'Bloom I',           src: 'images/IMG_1125_wallpaper.jpg' },
-  { id: 'artwork-30',  title: 'Bloom II',          src: 'images/IMG_1126_wallpaper.jpg' },
-  { id: 'artwork-31',  title: 'Bloom III',         src: 'images/IMG_1127_wallpaper.jpg' },
-  { id: 'artwork-32',  title: 'Bloom IV',          src: 'images/IMG_1128_wallpaper.jpg' },
-  { id: 'artwork-33',  title: 'Bloom V',           src: 'images/IMG_1129_wallpaper.jpg' },
-  { id: 'artwork-34',  title: 'Bloom VI',          src: 'images/IMG_1130_wallpaper.jpg' },
-  { id: 'artwork-35',  title: 'Bloom VII',         src: 'images/IMG_1131_wallpaper.jpg' },
-  { id: 'artwork-36',  title: 'Bloom VIII',        src: 'images/IMG_1133_wallpaper.jpg' },
-  { id: 'artwork-37',  title: 'Bloom IX',          src: 'images/IMG_1134_wallpaper.jpg' },
-  { id: 'artwork-38',  title: 'Bloom X',           src: 'images/IMG_1135_wallpaper.jpg' },
-  { id: 'artwork-39',  title: 'Bloom XI',          src: 'images/IMG_1136_wallpaper.jpg' },
-  { id: 'artwork-40',  title: 'Bloom XII',         src: 'images/IMG_1137_wallpaper.jpg' },
-  { id: 'artwork-41',  title: 'Bloom XIII',        src: 'images/IMG_1138_wallpaper.jpg' },
-  { id: 'artwork-42',  title: 'Bloom XIV',         src: 'images/IMG_1139_wallpaper.jpg' },
-  { id: 'artwork-43',  title: 'Bloom XV',          src: 'images/IMG_1140_wallpaper.jpg' },
-  { id: 'artwork-44',  title: 'Melt I',            src: 'images/IMG_1211_wallpaper.jpg' },
-  { id: 'artwork-45',  title: 'Melt II',           src: 'images/IMG_1212_wallpaper.jpg' },
-  { id: 'artwork-46',  title: 'Melt III',          src: 'images/IMG_1213_wallpaper.jpg' },
-  { id: 'artwork-47',  title: 'Melt IV',           src: 'images/IMG_1214_wallpaper.jpg' },
-  { id: 'artwork-48',  title: 'Melt V',            src: 'images/IMG_1215_wallpaper.jpg' },
-  { id: 'artwork-49',  title: 'Kaleidoscope I',    src: 'images/IMG_6470_wallpaper.jpg' },
-  { id: 'artwork-50',  title: 'Prism I',           src: 'images/IMG_8334_wallpaper.jpg' },
-  { id: 'artwork-51',  title: 'Prism II',          src: 'images/IMG_8335_wallpaper.jpg' },
-  { id: 'artwork-52',  title: 'Prism III',         src: 'images/IMG_8336_wallpaper.jpg' },
-  { id: 'artwork-53',  title: 'Prism IV',          src: 'images/IMG_8338_wallpaper.jpg' },
-
+  { id: 'artwork-04',  title: 'Study I',        src: 'images/IMG_0240_wallpaper.jpg' },
+  { id: 'artwork-05',  title: 'Study II',       src: 'images/IMG_0241_wallpaper.jpg' },
+  { id: 'artwork-06',  title: 'Study III',      src: 'images/IMG_0248_wallpaper.jpg' },
+  { id: 'artwork-07',  title: 'Fracture I',     src: 'images/IMG_0253_wallpaper.jpg' },
+  { id: 'artwork-08',  title: 'Fracture II',    src: 'images/IMG_0254_wallpaper.jpg' },
+  { id: 'artwork-09',  title: 'Fracture III',   src: 'images/IMG_0255_wallpaper.jpg' },
+  { id: 'artwork-10',  title: 'Fracture IV',    src: 'images/IMG_0256_wallpaper.jpg' },
+  { id: 'artwork-11',  title: 'Fracture V',     src: 'images/IMG_0257_wallpaper.jpg' },
+  { id: 'artwork-12',  title: 'Fracture VI',    src: 'images/IMG_0258_wallpaper.jpg' },
+  { id: 'artwork-13',  title: 'Fracture VII',   src: 'images/IMG_0259_wallpaper.jpg' },
+  { id: 'artwork-14',  title: 'Vision I',       src: 'images/IMG_0966_wallpaper.jpg' },
+  { id: 'artwork-15',  title: 'Vision II',      src: 'images/IMG_0967_wallpaper.jpg' },
+  { id: 'artwork-16',  title: 'Vision III',     src: 'images/IMG_0968_wallpaper.jpg' },
+  { id: 'artwork-17',  title: 'Vision IV',      src: 'images/IMG_0969_wallpaper.jpg' },
+  { id: 'artwork-18',  title: 'Vision V',       src: 'images/IMG_0970_wallpaper.jpg' },
+  { id: 'artwork-19',  title: 'Vision VI',      src: 'images/IMG_0971_wallpaper.jpg' },
+  { id: 'artwork-20',  title: 'Vision VII',     src: 'images/IMG_0972_wallpaper.jpg' },
+  { id: 'artwork-21',  title: 'Vision VIII',    src: 'images/IMG_0973_wallpaper.jpg' },
+  { id: 'artwork-22',  title: 'Vision IX',      src: 'images/IMG_0974_wallpaper.jpg' },
+  { id: 'artwork-23',  title: 'Vision X',       src: 'images/IMG_0975_wallpaper.jpg' },
+  { id: 'artwork-24',  title: 'Vision XI',      src: 'images/IMG_0976_wallpaper.jpg' },
+  { id: 'artwork-25',  title: 'Vision XII',     src: 'images/IMG_0977_wallpaper.jpg' },
+  { id: 'artwork-26',  title: 'Vision XIII',    src: 'images/IMG_0978_wallpaper.jpg' },
+  { id: 'artwork-27',  title: 'Vision XIV',     src: 'images/IMG_0979_wallpaper.jpg' },
+  { id: 'artwork-28',  title: 'Vision XV',      src: 'images/IMG_0980_wallpaper.jpg' },
+  { id: 'artwork-29',  title: 'Bloom I',        src: 'images/IMG_1125_wallpaper.jpg' },
+  { id: 'artwork-30',  title: 'Bloom II',       src: 'images/IMG_1126_wallpaper.jpg' },
+  { id: 'artwork-31',  title: 'Bloom III',      src: 'images/IMG_1127_wallpaper.jpg' },
+  { id: 'artwork-32',  title: 'Bloom IV',       src: 'images/IMG_1128_wallpaper.jpg' },
+  { id: 'artwork-33',  title: 'Bloom V',        src: 'images/IMG_1129_wallpaper.jpg' },
+  { id: 'artwork-34',  title: 'Bloom VI',       src: 'images/IMG_1130_wallpaper.jpg' },
+  { id: 'artwork-35',  title: 'Bloom VII',      src: 'images/IMG_1131_wallpaper.jpg' },
+  { id: 'artwork-36',  title: 'Bloom VIII',     src: 'images/IMG_1133_wallpaper.jpg' },
+  { id: 'artwork-37',  title: 'Bloom IX',       src: 'images/IMG_1134_wallpaper.jpg' },
+  { id: 'artwork-38',  title: 'Bloom X',        src: 'images/IMG_1135_wallpaper.jpg' },
+  { id: 'artwork-39',  title: 'Bloom XI',       src: 'images/IMG_1136_wallpaper.jpg' },
+  { id: 'artwork-40',  title: 'Bloom XII',      src: 'images/IMG_1137_wallpaper.jpg' },
+  { id: 'artwork-41',  title: 'Bloom XIII',     src: 'images/IMG_1138_wallpaper.jpg' },
+  { id: 'artwork-42',  title: 'Bloom XIV',      src: 'images/IMG_1139_wallpaper.jpg' },
+  { id: 'artwork-43',  title: 'Bloom XV',       src: 'images/IMG_1140_wallpaper.jpg' },
+  { id: 'artwork-44',  title: 'Melt I',         src: 'images/IMG_1211_wallpaper.jpg' },
+  { id: 'artwork-45',  title: 'Melt II',        src: 'images/IMG_1212_wallpaper.jpg' },
+  { id: 'artwork-46',  title: 'Melt III',       src: 'images/IMG_1213_wallpaper.jpg' },
+  { id: 'artwork-47',  title: 'Melt IV',        src: 'images/IMG_1214_wallpaper.jpg' },
+  { id: 'artwork-48',  title: 'Melt V',         src: 'images/IMG_1215_wallpaper.jpg' },
+  { id: 'artwork-49',  title: 'Kaleidoscope I', src: 'images/IMG_6470_wallpaper.jpg' },
+  { id: 'artwork-50',  title: 'Prism I',        src: 'images/IMG_8334_wallpaper.jpg' },
+  { id: 'artwork-51',  title: 'Prism II',       src: 'images/IMG_8335_wallpaper.jpg' },
+  { id: 'artwork-52',  title: 'Prism III',      src: 'images/IMG_8336_wallpaper.jpg' },
+  { id: 'artwork-53',  title: 'Prism IV',       src: 'images/IMG_8338_wallpaper.jpg' },
 ];
 
-// ── Build gallery ──
-const grid = document.getElementById('galleryGrid');
-let currentArtwork = null;
-let lightboxLocked = false;
+// STATE
+let currentArtwork   = null;
+let currentBrightness = 100;
+let lightboxLocked   = false;
 
-// BUG-11: Restore last device selection
+// ELEMENTS
+const lightbox       = document.getElementById('lightbox');
+const lightboxImg    = document.getElementById('lightboxImg');
+const lightboxTitle  = document.getElementById('lightboxTitle');
+const deviceSelect   = document.getElementById('deviceSelect');
+const downloadBtn    = document.getElementById('downloadBtn');
+const brightnessSlider = document.getElementById('brightnessSlider');
+const brightnessVal    = document.getElementById('brightnessVal');
+const brightnessReset  = document.getElementById('brightnessReset');
+const grid             = document.getElementById('galleryGrid');
+
+// DEVICE PERSISTENCE
 const savedDevice = sessionStorage.getItem('ipray_device');
 if (savedDevice) {
-  const opt = document.querySelector(`#deviceSelect option[value="${savedDevice}"]`);
+  const opt = deviceSelect.querySelector('option[value="' + savedDevice + '"]');
   if (opt) opt.selected = true;
 }
-document.getElementById('deviceSelect').addEventListener('change', e => {
+deviceSelect.addEventListener('change', function(e) {
   sessionStorage.setItem('ipray_device', e.target.value);
 });
 
+// BRIGHTNESS
+function updateSliderTrack(val) {
+  var pct = ((val - 30) / (180 - 30)) * 100;
+  brightnessSlider.style.background =
+    'linear-gradient(to right, var(--pink) 0%, var(--pink) ' + pct + '%, rgba(255,255,255,0.15) ' + pct + '%, rgba(255,255,255,0.15) 100%)';
+}
+
+function resetBrightness() {
+  currentBrightness = 100;
+  brightnessSlider.value = 100;
+  brightnessVal.textContent = '100%';
+  updateSliderTrack(100);
+  lightboxImg.style.filter = 'none';
+}
+
+brightnessSlider.addEventListener('input', function() {
+  currentBrightness = parseInt(brightnessSlider.value);
+  brightnessVal.textContent = currentBrightness + '%';
+  updateSliderTrack(currentBrightness);
+  lightboxImg.style.filter = 'brightness(' + (currentBrightness / 100) + ')';
+});
+
+brightnessReset.addEventListener('click', resetBrightness);
+updateSliderTrack(100);
+
+// GALLERY
 function buildGallery() {
-  GALLERY.forEach((art) => {
-    const item = document.createElement('div');
+  GALLERY.forEach(function(art) {
+    var item = document.createElement('div');
     item.className = 'gallery-item';
-    item.innerHTML = `
-      <img src="${art.src}" alt="${art.title} by Ema Sweeney" loading="lazy">
-      <div class="gallery-item-overlay">
-        <div>
-          <p class="gallery-item-title">${art.title}</p>
-          <p class="gallery-item-hint">Tap to download</p>
-        </div>
-      </div>
-    `;
-    // BUG-10: Debounce rapid tapping
-    let tapping = false;
-    item.addEventListener('click', () => {
+    item.innerHTML =
+      '<img src="' + art.src + '" alt="' + art.title + ' by Ema Sweeney" loading="lazy">' +
+      '<div class="gallery-item-overlay"><div>' +
+      '<p class="gallery-item-title">' + art.title + '</p>' +
+      '<p class="gallery-item-hint">Tap to download</p>' +
+      '</div></div>';
+
+    var tapping = false;
+    item.addEventListener('click', function() {
       if (tapping || lightboxLocked) return;
       tapping = true;
-      setTimeout(() => tapping = false, 300);
+      setTimeout(function() { tapping = false; }, 300);
       openLightbox(art);
     });
     grid.appendChild(item);
   });
 
-  const observer = new IntersectionObserver((entries) => {
-    entries.forEach((entry, i) => {
+  var observer = new IntersectionObserver(function(entries) {
+    entries.forEach(function(entry, i) {
       if (entry.isIntersecting) {
-        setTimeout(() => entry.target.classList.add('visible'), i * 40);
+        setTimeout(function() { entry.target.classList.add('visible'); }, i * 40);
         observer.unobserve(entry.target);
       }
     });
   }, { threshold: 0.05 });
 
-  document.querySelectorAll('.gallery-item').forEach(el => observer.observe(el));
+  document.querySelectorAll('.gallery-item').forEach(function(el) {
+    observer.observe(el);
+  });
 }
 
-// ── Lightbox ──
-const lightbox = document.getElementById('lightbox');
-const lightboxImg = document.getElementById('lightboxImg');
-const lightboxTitle = document.getElementById('lightboxTitle');
-
+// LIGHTBOX
 function openLightbox(art) {
   currentArtwork = art;
   lightboxImg.src = art.src;
-  lightboxImg.alt = `${art.title} by Ema Sweeney`;
+  lightboxImg.alt = art.title + ' by Ema Sweeney';
   lightboxTitle.textContent = art.title;
   document.getElementById('wallpaperTip').classList.remove('visible');
+  resetBrightness();
   lightbox.classList.add('active');
   document.body.style.overflow = 'hidden';
   lightboxLocked = true;
-  setTimeout(() => lightboxLocked = false, 350);
+  setTimeout(function() { lightboxLocked = false; }, 350);
 }
 
 function closeLightbox() {
@@ -989,83 +998,38 @@ function closeLightbox() {
 }
 
 document.getElementById('closeBtn').addEventListener('click', closeLightbox);
-lightbox.addEventListener('click', e => { if (e.target === lightbox) closeLightbox(); });
-document.addEventListener('keydown', e => { if (e.key === 'Escape') closeLightbox(); });
+lightbox.addEventListener('click', function(e) { if (e.target === lightbox) closeLightbox(); });
+document.addEventListener('keydown', function(e) { if (e.key === 'Escape') closeLightbox(); });
 
-// ── Brightness slider ──
-const brightnessSlider = document.getElementById('brightnessSlider');
-const brightnessVal = document.getElementById('brightnessVal');
-const brightnessReset = document.getElementById('brightnessReset');
-let currentBrightness = 100;
-
-function updateSliderTrack(val) {
-  const pct = ((val - 30) / (180 - 30)) * 100;
-  brightnessSlider.style.background =
-    `linear-gradient(to right, var(--pink) 0%, var(--pink) ${pct}%, rgba(255,255,255,0.15) ${pct}%, rgba(255,255,255,0.15) 100%)`;
-}
-
-brightnessSlider.addEventListener('input', () => {
-  currentBrightness = parseInt(brightnessSlider.value);
-  brightnessVal.textContent = `${currentBrightness}%`;
-  updateSliderTrack(currentBrightness);
-  // Live preview on phone frame
-  document.getElementById('lightboxImg').style.filter =
-    `brightness(${currentBrightness / 100})`;
-});
-
-brightnessReset.addEventListener('click', () => {
-  currentBrightness = 100;
-  brightnessSlider.value = 100;
-  brightnessVal.textContent = '100%';
-  updateSliderTrack(100);
-  document.getElementById('lightboxImg').style.filter = 'none';
-});
-
-// Reset brightness when lightbox opens
-const _origOpenLightbox = openLightbox;
-function openLightbox(art) {
-  _origOpenLightbox(art);
-  currentBrightness = 100;
-  brightnessSlider.value = 100;
-  brightnessVal.textContent = '100%';
-  updateSliderTrack(100);
-  document.getElementById('lightboxImg').style.filter = 'none';
-}
-
-// ── Canvas crop/scale ──
+// CANVAS
 function getDeviceDimensions() {
-  const [w, h] = document.getElementById('deviceSelect').value.split('x').map(Number);
-  return { w, h };
+  var parts = deviceSelect.value.split('x');
+  return { w: parseInt(parts[0]), h: parseInt(parts[1]) };
 }
 
 function renderToCanvas(imgEl, targetW, targetH) {
-  const canvas = document.getElementById('offscreen-canvas');
-  canvas.width = targetW;
+  var canvas = document.getElementById('offscreen-canvas');
+  canvas.width  = targetW;
   canvas.height = targetH;
-  const ctx = canvas.getContext('2d');
-  // Apply brightness filter to canvas output
-  ctx.filter = `brightness(${currentBrightness / 100})`;
-  const scale = Math.max(targetW / imgEl.naturalWidth, targetH / imgEl.naturalHeight);
-  const drawW = imgEl.naturalWidth * scale;
-  const drawH = imgEl.naturalHeight * scale;
+  var ctx = canvas.getContext('2d');
+  ctx.filter = 'brightness(' + (currentBrightness / 100) + ')';
+  var scale = Math.max(targetW / imgEl.naturalWidth, targetH / imgEl.naturalHeight);
+  var drawW = imgEl.naturalWidth  * scale;
+  var drawH = imgEl.naturalHeight * scale;
   ctx.drawImage(imgEl, (targetW - drawW) / 2, (targetH - drawH) / 2, drawW, drawH);
   ctx.filter = 'none';
   return canvas;
 }
 
-// ── Download ──
-const downloadBtn = document.getElementById('downloadBtn');
-
-downloadBtn.addEventListener('click', async () => {
+// DOWNLOAD
+downloadBtn.addEventListener('click', function() {
   if (!currentArtwork) return;
   downloadBtn.classList.add('loading');
-  downloadBtn.textContent = 'Preparing…';
+  downloadBtn.textContent = 'Preparing\u2026';
 
-  const { w, h } = getDeviceDimensions();
-  // BUG-06: Sanitise filename — strip special chars, arrows, brackets
-  const deviceLabel = document.getElementById('deviceSelect').selectedOptions[0].text
+  var dims = getDeviceDimensions();
+  var deviceLabel = deviceSelect.selectedOptions[0].text
     .replace(/\(.*?\)/g, '')
-    .replace(/[←↑↓→]/g, '')
     .replace(/[^a-zA-Z0-9\s]/g, '')
     .trim()
     .replace(/\s+/g, '-')
@@ -1073,26 +1037,23 @@ downloadBtn.addEventListener('click', async () => {
     .replace(/-+/g, '-')
     .replace(/-$/, '');
 
-  const img = new Image();
+  var img = new Image();
   img.crossOrigin = 'anonymous';
 
-  img.onload = async () => {
-    const canvas = renderToCanvas(img, w, h);
-    const filename = `ipray4rain-${currentArtwork.id}-${deviceLabel}.png`;
+  img.onload = function() {
+    var canvas   = renderToCanvas(img, dims.w, dims.h);
+    var filename = 'ipray4rain-' + currentArtwork.id + '-' + deviceLabel + '.png';
 
-    canvas.toBlob(async (blob) => {
-      const file = new File([blob], filename, { type: 'image/png' });
+    canvas.toBlob(function(blob) {
+      var file = new File([blob], filename, { type: 'image/png' });
 
       if (navigator.canShare && navigator.canShare({ files: [file] })) {
-        try {
-          await navigator.share({ files: [file], title: currentArtwork.title });
-          showTip();
-          resetBtn();
-        } catch (err) {
-          resetBtn();
-          if (err.name === 'AbortError') return; // User cancelled — silent, allow retry
-          fallbackDownload(blob, filename); // Any other error — fall back to download
-        }
+        navigator.share({ files: [file], title: currentArtwork.title })
+          .then(function() { showTip(); resetBtn(); })
+          .catch(function(err) {
+            resetBtn();
+            if (err.name !== 'AbortError') fallbackDownload(blob, filename);
+          });
       } else {
         fallbackDownload(blob, filename);
         resetBtn();
@@ -1100,19 +1061,19 @@ downloadBtn.addEventListener('click', async () => {
     }, 'image/png');
   };
 
-  img.onerror = () => { alert('Could not load image.'); resetBtn(); };
+  img.onerror = function() { alert('Could not load image.'); resetBtn(); };
   img.src = currentArtwork.src;
 });
 
 function fallbackDownload(blob, filename) {
-  const url = URL.createObjectURL(blob);
-  const a = document.createElement('a');
-  a.href = url;
+  var url = URL.createObjectURL(blob);
+  var a   = document.createElement('a');
+  a.href     = url;
   a.download = filename;
   document.body.appendChild(a);
   a.click();
   document.body.removeChild(a);
-  setTimeout(() => URL.revokeObjectURL(url), 5000);
+  setTimeout(function() { URL.revokeObjectURL(url); }, 5000);
   showTip();
 }
 
@@ -1120,20 +1081,29 @@ function showTip() { document.getElementById('wallpaperTip').classList.add('visi
 
 function resetBtn() {
   downloadBtn.classList.remove('loading');
-  downloadBtn.innerHTML = `
-    <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
-      <path d="M8 1v9M4 7l4 4 4-4M2 14h12" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-    </svg>
-    Download Wallpaper
-  `;
+  downloadBtn.innerHTML =
+    '<svg width="16" height="16" viewBox="0 0 16 16" fill="none">' +
+    '<path d="M8 1v9M4 7l4 4 4-4M2 14h12" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>' +
+    '</svg> Download Wallpaper';
 }
 
+// EMAIL COPY
 function copyEmail(e) {
-  navigator.clipboard.writeText('iprayforrain54@gmail.com').then(() => {
-    // Only show success if clipboard actually worked
-    const el = document.getElementById('emailLink');
-    const orig = el.textContent;
-    el.textContent = '✅ Copied!';
-    setTimeout(() => el.textContent = orig, 2500);
-  }).catch(() => {
-    // Clipboard denied — mailto still fires naturally, show a manual copy
+  navigator.clipboard.writeText('iprayforrain54@gmail.com').then(function() {
+    var el = document.getElementById('emailLink');
+    var orig = el.textContent;
+    el.textContent = '\u2705 Copied!';
+    setTimeout(function() { el.textContent = orig; }, 2500);
+  }).catch(function() {
+    var el = document.getElementById('emailLink');
+    var orig = el.textContent;
+    el.textContent = '\uD83D\uDCCB Copy: iprayforrain54@gmail.com';
+    setTimeout(function() { el.textContent = orig; }, 3000);
+  });
+}
+
+// INIT
+buildGallery();
+</script>
+</body>
+</html>
