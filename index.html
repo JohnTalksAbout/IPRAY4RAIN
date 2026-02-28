@@ -22,7 +22,15 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>IPRAY4RAIN — Wallpapers by Ema Sweeney</title>
-<meta name="description" content="Free psychedelic wallpapers for your phone. Digital art by Ema Sweeney.">
+<meta name="description" content="Free psychedelic phone wallpapers by digital artist Ema Sweeney. Download high-resolution iPhone and Android wallpapers. IPRAY4RAIN.">
+<meta property="og:title" content="IPRAY4RAIN — Free Wallpapers by Ema Sweeney">
+<meta property="og:description" content="Psychedelic digital art wallpapers for your phone. Free to download.">
+<meta property="og:url" content="https://johntalksabout.github.io/IPRAY4RAIN/">
+<meta property="og:type" content="website">
+<meta property="og:image" content="https://johntalksabout.github.io/IPRAY4RAIN/images/IMG_6470_wallpaper.jpg">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="IPRAY4RAIN — Free Wallpapers by Ema Sweeney">
+<meta name="twitter:image" content="https://johntalksabout.github.io/IPRAY4RAIN/images/IMG_6470_wallpaper.jpg">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Syne:wght@400;600;700;800&family=DM+Serif+Display:ital@0;1&display=swap" rel="stylesheet">
@@ -603,7 +611,7 @@ body::before {
         Download Wallpaper
       </button>
       <div class="wallpaper-tip" id="wallpaperTip">
-        <strong>Saved!</strong> Open your Photos app → find the image → tap Share → Set as Wallpaper.
+        <strong>Saved!</strong> To set as wallpaper: open <strong>Settings → Wallpaper → Add New Wallpaper</strong> → choose the image from your Photos.
       </div>
     </div>
   </div>
@@ -618,7 +626,7 @@ body::before {
     <a href="https://www.instagram.com/ipray4rain/" target="_blank" rel="noopener" class="footer-link">📷 @ipray4rain</a>
     <a href="https://www.instagram.com/emasweeney/" target="_blank" rel="noopener" class="footer-link">📷 @emasweeney</a>
     <a href="https://emasweeney.com" target="_blank" rel="noopener" class="footer-link">🌐 emasweeney.com</a>
-    <a href="mailto:iprayforrain54@gmail.com" class="footer-link" id="emailLink" onclick="copyEmail(event)">✉️ iprayforrain54@gmail.com</a>
+    <a href="/cdn-cgi/l/email-protection#81e8f1f3e0f8e7eef3f3e0e8efb4b5c1e6ece0e8edafe2eeec" class="footer-link" id="emailLink" onclick="copyEmail(event)">✉️ <span class="__cf_email__" data-cfemail="1871686a79617e776a6a7971762d2c587f75797174367b7775">[email&#160;protected]</span></a>
     <a href="https://www.paypal.com/paypalme/emasweeneytattoo" target="_blank" rel="noopener" class="footer-link">☕ Support Ema's Work</a>
   </div>
   <div class="footer-divider"></div>
@@ -628,7 +636,7 @@ body::before {
   </p>
 </footer>
 
-<script>
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
 // ═══════════════════════════════════════════════════════
 //  GALLERY — all 54 artworks
 //  Titles marked * are placeholders — update with Ema's real titles
@@ -691,13 +699,24 @@ const GALLERY = [
 // ── Build gallery ──
 const grid = document.getElementById('galleryGrid');
 let currentArtwork = null;
+let lightboxLocked = false;
+
+// BUG-11: Restore last device selection
+const savedDevice = sessionStorage.getItem('ipray_device');
+if (savedDevice) {
+  const opt = document.querySelector(`#deviceSelect option[value="${savedDevice}"]`);
+  if (opt) opt.selected = true;
+}
+document.getElementById('deviceSelect').addEventListener('change', e => {
+  sessionStorage.setItem('ipray_device', e.target.value);
+});
 
 function buildGallery() {
   GALLERY.forEach((art) => {
     const item = document.createElement('div');
     item.className = 'gallery-item';
     item.innerHTML = `
-      <img src="${art.src}" alt="${art.title}" loading="lazy">
+      <img src="${art.src}" alt="${art.title} by Ema Sweeney" loading="lazy">
       <div class="gallery-item-overlay">
         <div>
           <p class="gallery-item-title">${art.title}</p>
@@ -705,7 +724,14 @@ function buildGallery() {
         </div>
       </div>
     `;
-    item.addEventListener('click', () => openLightbox(art));
+    // BUG-10: Debounce rapid tapping
+    let tapping = false;
+    item.addEventListener('click', () => {
+      if (tapping || lightboxLocked) return;
+      tapping = true;
+      setTimeout(() => tapping = false, 300);
+      openLightbox(art);
+    });
     grid.appendChild(item);
   });
 
@@ -729,11 +755,13 @@ const lightboxTitle = document.getElementById('lightboxTitle');
 function openLightbox(art) {
   currentArtwork = art;
   lightboxImg.src = art.src;
-  lightboxImg.alt = art.title;
+  lightboxImg.alt = `${art.title} by Ema Sweeney`;
   lightboxTitle.textContent = art.title;
   document.getElementById('wallpaperTip').classList.remove('visible');
   lightbox.classList.add('active');
   document.body.style.overflow = 'hidden';
+  lightboxLocked = true;
+  setTimeout(() => lightboxLocked = false, 350);
 }
 
 function closeLightbox() {
@@ -773,8 +801,16 @@ downloadBtn.addEventListener('click', async () => {
   downloadBtn.textContent = 'Preparing…';
 
   const { w, h } = getDeviceDimensions();
+  // BUG-06: Sanitise filename — strip special chars, arrows, brackets
   const deviceLabel = document.getElementById('deviceSelect').selectedOptions[0].text
-    .replace(/\s*\(.*\)/, '').trim().replace(/[\s/]+/g, '-').toLowerCase();
+    .replace(/\(.*?\)/g, '')
+    .replace(/[←↑↓→]/g, '')
+    .replace(/[^a-zA-Z0-9\s]/g, '')
+    .trim()
+    .replace(/\s+/g, '-')
+    .toLowerCase()
+    .replace(/-+/g, '-')
+    .replace(/-$/, '');
 
   const img = new Image();
   img.crossOrigin = 'anonymous';
@@ -790,13 +826,16 @@ downloadBtn.addEventListener('click', async () => {
         try {
           await navigator.share({ files: [file], title: currentArtwork.title });
           showTip();
+          resetBtn();
         } catch (err) {
-          if (err.name !== 'AbortError') fallbackDownload(blob, filename);
+          resetBtn();
+          if (err.name === 'AbortError') return; // User cancelled — silent, allow retry
+          fallbackDownload(blob, filename); // Any other error — fall back to download
         }
       } else {
         fallbackDownload(blob, filename);
+        resetBtn();
       }
-      resetBtn();
     }, 'image/png');
   };
 
@@ -829,17 +868,20 @@ function resetBtn() {
 }
 
 function copyEmail(e) {
-  // Try mailto first, also copy to clipboard as fallback
   navigator.clipboard.writeText('iprayforrain54@gmail.com').then(() => {
+    // Only show success if clipboard actually worked
     const el = document.getElementById('emailLink');
     const orig = el.textContent;
-    el.textContent = '✅ Copied to clipboard!';
+    el.textContent = '✅ Copied!';
     setTimeout(() => el.textContent = orig, 2500);
   }).catch(() => {
-    // mailto will still fire naturally
+    // Clipboard denied — mailto still fires naturally, show a manual copy hint
+    const el = document.getElementById('emailLink');
+    const orig = el.textContent;
+    el.textContent = '📋 Copy: iprayforrain54@gmail.com';
+    setTimeout(() => el.textContent = orig, 3000);
   });
 }
-
 buildGallery();
 </script>
 </body>
