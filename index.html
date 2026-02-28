@@ -478,6 +478,89 @@ body::before {
   .lightbox-title { font-size: 2rem; }
 }
 
+.brightness-wrap {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.brightness-label-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.brightness-label {
+  font-size: 0.65rem;
+  font-weight: 700;
+  letter-spacing: 0.2em;
+  color: var(--pink);
+  text-transform: uppercase;
+}
+
+.brightness-value {
+  font-size: 0.75rem;
+  color: var(--muted);
+  font-variant-numeric: tabular-nums;
+  min-width: 36px;
+  text-align: right;
+}
+
+.brightness-slider {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 100%;
+  height: 3px;
+  border-radius: 2px;
+  background: linear-gradient(to right, var(--pink) 0%, var(--pink) 50%, rgba(255,255,255,0.15) 50%, rgba(255,255,255,0.15) 100%);
+  outline: none;
+  cursor: pointer;
+}
+
+.brightness-slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: var(--white);
+  box-shadow: 0 0 8px var(--glow-pink);
+  cursor: pointer;
+  transition: transform 0.15s, box-shadow 0.15s;
+}
+
+.brightness-slider::-webkit-slider-thumb:hover {
+  transform: scale(1.2);
+  box-shadow: 0 0 14px var(--glow-pink);
+}
+
+.brightness-slider::-moz-range-thumb {
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: var(--white);
+  border: none;
+  box-shadow: 0 0 8px var(--glow-pink);
+  cursor: pointer;
+}
+
+.brightness-reset {
+  font-size: 0.65rem;
+  color: var(--muted);
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+  transition: color 0.2s;
+  text-align: left;
+  font-family: 'Syne', sans-serif;
+  letter-spacing: 0.05em;
+}
+
+.brightness-reset:hover { color: var(--pink); }
+
 /* ── Support Section ── */
 .support-section {
   padding: 100px 24px;
@@ -692,6 +775,16 @@ body::before {
         <h2 class="lightbox-title" id="lightboxTitle">–</h2>
       </div>
       <div>
+      <div class="brightness-wrap">
+        <div class="brightness-label-row">
+          <span class="brightness-label">Brightness</span>
+          <span class="brightness-value" id="brightnessVal">100%</span>
+        </div>
+        <input type="range" class="brightness-slider" id="brightnessSlider"
+          min="30" max="180" value="100" step="1">
+        <button class="brightness-reset" id="brightnessReset">Reset to original</button>
+      </div>
+
         <p class="device-label">Choose your device <span style="font-weight:400;color:var(--muted);letter-spacing:0">— iPhone 14/13/12 pre-selected</span></p>
         <select class="device-select" id="deviceSelect">
           <option value="1320x2868">iPhone 17 Pro Max / 16 Pro Max (1320×2868)</option>          <option value="1260x2736">iPhone 17 Air (1260×2736)</option>
@@ -751,7 +844,7 @@ body::before {
     <a href="https://www.instagram.com/ipray4rain/" target="_blank" rel="noopener noreferrer" class="footer-link">📷 @ipray4rain</a>
     <a href="https://www.instagram.com/emasweeney/" target="_blank" rel="noopener noreferrer" class="footer-link">📷 @emasweeney</a>
     <a href="https://emasweeney.com" target="_blank" rel="noopener noreferrer" class="footer-link">🌐 emasweeney.com</a>
-    <a href="mailto:iprayforrain54@gmail.com" class="footer-link" id="emailLink" onclick="copyEmail(event)">✉️ iprayforrain54@gmail.com</a>
+    <a href="/cdn-cgi/l/email-protection#fd948d8f9c849b928f8f9c9493c8c9bd9a909c9491d39e9290" class="footer-link" id="emailLink" onclick="copyEmail(event)">✉️ <span class="__cf_email__" data-cfemail="046d7476657d626b7676656d6a3130446369656d682a676b69">[email&#160;protected]</span></a>
     <a href="https://www.paypal.com/paypalme/emasweeneytattoo" target="_blank" rel="noopener noreferrer" class="footer-link">☕ Support Ema's Work</a>
   </div>
   <div class="footer-divider"></div>
@@ -761,7 +854,7 @@ body::before {
   </p>
 </footer>
 
-<script>
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
 // ═══════════════════════════════════════════════════════
 //  GALLERY — all 54 artworks
 //  Titles marked * are placeholders — update with Ema's real titles
@@ -899,6 +992,46 @@ document.getElementById('closeBtn').addEventListener('click', closeLightbox);
 lightbox.addEventListener('click', e => { if (e.target === lightbox) closeLightbox(); });
 document.addEventListener('keydown', e => { if (e.key === 'Escape') closeLightbox(); });
 
+// ── Brightness slider ──
+const brightnessSlider = document.getElementById('brightnessSlider');
+const brightnessVal = document.getElementById('brightnessVal');
+const brightnessReset = document.getElementById('brightnessReset');
+let currentBrightness = 100;
+
+function updateSliderTrack(val) {
+  const pct = ((val - 30) / (180 - 30)) * 100;
+  brightnessSlider.style.background =
+    `linear-gradient(to right, var(--pink) 0%, var(--pink) ${pct}%, rgba(255,255,255,0.15) ${pct}%, rgba(255,255,255,0.15) 100%)`;
+}
+
+brightnessSlider.addEventListener('input', () => {
+  currentBrightness = parseInt(brightnessSlider.value);
+  brightnessVal.textContent = `${currentBrightness}%`;
+  updateSliderTrack(currentBrightness);
+  // Live preview on phone frame
+  document.getElementById('lightboxImg').style.filter =
+    `brightness(${currentBrightness / 100})`;
+});
+
+brightnessReset.addEventListener('click', () => {
+  currentBrightness = 100;
+  brightnessSlider.value = 100;
+  brightnessVal.textContent = '100%';
+  updateSliderTrack(100);
+  document.getElementById('lightboxImg').style.filter = 'none';
+});
+
+// Reset brightness when lightbox opens
+const _origOpenLightbox = openLightbox;
+function openLightbox(art) {
+  _origOpenLightbox(art);
+  currentBrightness = 100;
+  brightnessSlider.value = 100;
+  brightnessVal.textContent = '100%';
+  updateSliderTrack(100);
+  document.getElementById('lightboxImg').style.filter = 'none';
+}
+
 // ── Canvas crop/scale ──
 function getDeviceDimensions() {
   const [w, h] = document.getElementById('deviceSelect').value.split('x').map(Number);
@@ -910,10 +1043,13 @@ function renderToCanvas(imgEl, targetW, targetH) {
   canvas.width = targetW;
   canvas.height = targetH;
   const ctx = canvas.getContext('2d');
+  // Apply brightness filter to canvas output
+  ctx.filter = `brightness(${currentBrightness / 100})`;
   const scale = Math.max(targetW / imgEl.naturalWidth, targetH / imgEl.naturalHeight);
   const drawW = imgEl.naturalWidth * scale;
   const drawH = imgEl.naturalHeight * scale;
   ctx.drawImage(imgEl, (targetW - drawW) / 2, (targetH - drawH) / 2, drawW, drawH);
+  ctx.filter = 'none';
   return canvas;
 }
 
@@ -1000,14 +1136,4 @@ function copyEmail(e) {
     el.textContent = '✅ Copied!';
     setTimeout(() => el.textContent = orig, 2500);
   }).catch(() => {
-    // Clipboard denied — mailto still fires naturally, show a manual copy hint
-    const el = document.getElementById('emailLink');
-    const orig = el.textContent;
-    el.textContent = '📋 Copy: iprayforrain54@gmail.com';
-    setTimeout(() => el.textContent = orig, 3000);
-  });
-}
-buildGallery();
-</script>
-</body>
-</html>
+    // Clipboard denied — mailto still fires naturally, show a manual copy
